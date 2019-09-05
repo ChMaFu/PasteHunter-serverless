@@ -1,0 +1,3 @@
+[submodule "PasteHunter"]
+	path = PasteHunter
+	url = https://github.com/kevthehermit/PasteHunter.git
