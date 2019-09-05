@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: pastebin-scraper
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  PastebinScraper:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Grabs latest list of pastes from pastebin, saves to SQS
+      CodeUri: .
+      Handler: pastebin_scraper_lambda.lambda_handler
+      Runtime: python3.7
+      Timeout: 10
+      Events:
+        TimerEventTrigger:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 minute)
+            Name: Every minute
+            Enabled: False
+  PastebinRetriever:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Grabs latest list of pastes from pastebin, saves to SQS
+      CodeUri: .
+      Handler: pastebin_retriever_lambda.lambda_handler
+      Runtime: python3.7
+      Timeout: 10
+      Events:
+        PastebinItemQueueTrigger:
+          Type: SQS
+          Properties:
+            Queue: arn:aws:sqs:us-west-2:012345678901:my-queue # NOTE: FIFO SQS Queues are not yet supported
+            BatchSize: 10
+            Enabled: true
+
+Outputs:
+  HelloWorldApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  HelloWorldFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt HelloWorldFunction.Arn
+  HelloWorldFunctionIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt HelloWorldFunctionRole.Arn
