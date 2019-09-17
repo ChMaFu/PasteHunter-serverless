@@ -1,6 +1,0 @@
-requests>=2.22.0
-yara-python==3.10.0
-boto3>=1.9.223
-awscli>=1.16.233
-bandit>=1.6.2
-black>=19.3b0
