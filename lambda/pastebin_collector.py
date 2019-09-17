@@ -13,7 +13,7 @@ formatter = logging.Formatter('%(levelname)s:%(filename)s:%(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
 
-def lambda_handler(event, context):
+def main(event, context):
     conf = parse_config()
     if not conf:
         raise Exception("Error: failed to parse config settings file")

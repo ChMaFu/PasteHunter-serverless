@@ -6,7 +6,7 @@ import util
 from PasteHunter.common import parse_config
 
 
-def lambda_handler(event, context):
+def main(event, context):
     conf = parse_config()
     if not conf:
         raise Exception("Error: failed to parse config settings file")

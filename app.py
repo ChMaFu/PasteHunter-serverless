@@ -25,18 +25,33 @@ class PastebinScraperStack(core.Stack):
                                    read_capacity=10,
                                    write_capacity=5)
 
+        
         scraper_lambda = awslambda.Function(
-            self, 'PastebinScraper',
+            self, 
+            'PastebinScraper',
+            memory_size=128,
             runtime=awslambda.Runtime.PYTHON_3_7,
             code=awslambda.Code.asset('./lambda'),
-            handler=''
+            handler='pastebin_scraper.main')
+'''
+        collector_lambda = awslambda.Function(
+            self, 
+            id='PastebinCollector',
+            memory_size=128,
+            runtime=awslambda.Runtime.PYTHON_3_7,
+            code=awslambda.Code.asset('./lambda'),
+            handler='pastebin_collector.main',
+            vpc=vpc)
 
         # pass the table name to the handler through an environment variable and grant
         # the handler read/write permissions on the table.
-        handler.add_environment('TABLE_NAME', table.table_name)
-        table.grant_read_write_data(handler)
+        scraper_lambda.add_environment('TABLE_NAME', table.table_name)
+        collector_lambda.add_environment('TABLE_NAME', table.table_name)
 
-        )
+        table.grant_read_write_data(scraper_lambda)
+        table.grant_read_data(collector_lambda) '''
+        
+        
 
 app = core.App()
 PastebinScraperStack(app, "pastebin-app")

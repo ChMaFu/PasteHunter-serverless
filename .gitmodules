@@ -1,4 +1,4 @@
 
 [submodule "app/PasteHunter"]
-	path = app/PasteHunter
+	path = lambda/PasteHunter
 	url = https://github.com/kevthehermit/PasteHunter.git
