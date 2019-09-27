@@ -1,23 +1,25 @@
 import os
 import json
-import requests
 import logging
+import requests
 import boto3
-from PasteHunter.common import parse_config
+import common
+import pastescanner
+import PasteHunter.inputs.pastebin as pb
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(levelname)s:%(filename)s:%(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
+ddb = boto3.resource('dynamodb')
+table = ddb.Table(os.environ['PASTEBIN_TABLE_NAME'])
+_lambda = boto3.client('lambda')
+
+logger = logging.getLogger("pastehunter-serverless")
 
 def main(event, context):
-    conf = parse_config()
+    conf = common.parse_config()
     if not conf:
         raise Exception("Error: failed to parse config settings file")
-    
-    queue_name = os.environ["PASTEBIN_QUEUE_NAME"]
-    if not queue_name:
-        raise Exception("Error: no SQS name provided in environment")
+
+    # reproduce the original format of the paste item to preserve existing logic for retrieval and post processing
+    paste_data_records = common.unpack_ddb_paste_records(event['Records'])
+    for paste_data in paste_data_records:
+
+        

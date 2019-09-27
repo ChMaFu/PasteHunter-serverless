@@ -4,10 +4,12 @@ from aws_cdk.core import App, Construct, Duration
 from aws_cdk import (
     core,
     aws_lambda as awslambda,
+    event_source
     aws_apigateway as apigw,
     aws_dynamodb as dynamodb,
     aws_ec2 as ec2
 )
+import aws_cdk.aws_lambda
 
 from aws.aws_stack import AwsStack
 
@@ -31,17 +33,21 @@ class PastebinScraperStack(core.Stack):
             'PastebinScraper',
             memory_size=128,
             runtime=awslambda.Runtime.PYTHON_3_7,
-            code=awslambda.Code.asset('./lambda'),
-            handler='pastebin_scraper.main')
-'''
+            code=awslambda.Code.asset('./code'),
+            handler='pastebin_scraper.main',
+            timeout=15)
+
         collector_lambda = awslambda.Function(
             self, 
             id='PastebinCollector',
             memory_size=128,
             runtime=awslambda.Runtime.PYTHON_3_7,
-            code=awslambda.Code.asset('./lambda'),
+            code=awslambda.Code.asset('./code'),
             handler='pastebin_collector.main',
             vpc=vpc)
+
+        event_source = 
+        collector_lambda.add_event_source()
 
         # pass the table name to the handler through an environment variable and grant
         # the handler read/write permissions on the table.
@@ -49,7 +55,7 @@ class PastebinScraperStack(core.Stack):
         collector_lambda.add_environment('TABLE_NAME', table.table_name)
 
         table.grant_read_write_data(scraper_lambda)
-        table.grant_read_data(collector_lambda) '''
+        table.grant_read_data(collector_lambda)
         
         
 

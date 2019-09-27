@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+rope = "*"
+
+[packages]
+requests = ">=2.22.0"
+yara-python = "==3.10.0"
+boto3 = ">=1.9.223"
+awscli = ">=1.16.233"
+bandit = ">=1.6.2"
+pytest = "*"
+pylint = "*"
+pastehunter-serverless = {editable = true,path = "."}
+
+[requires]
+python_version = "3.7"

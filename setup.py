@@ -22,12 +22,13 @@ setuptools.setup(
         "aws-cdk.aws-events",
         "aws-cdk.aws-events-targets",
         "aws-cdk.aws-lambda",
+        "aws-cdk.aws-lambda-event-sources",
         "aws-cdk.aws-s3",
         "aws-cdk.aws-ec2",
         "aws-cdk.aws-certificatemanager",
         "aws-cdk.aws-apigateway",
         "aws-cdk.aws-cloudwatch",
-        "cdk-watchful",
+        #"cdk-watchful",
         "boto3"
     ],
 

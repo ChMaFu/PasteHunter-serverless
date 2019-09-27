@@ -10,6 +10,20 @@ The paste item metadata, including content URL, are then queued and retrieved by
 * [AWS Redshift](https://aws.amazon.com/redshift/)
 * [Splunk](https://www.splunk.com/)
 
+## Project Status - Work In progress.
+
+Works:
+* CDK environment setup
+* Pastebin scraper Lambda
+
+In-progress:
+* Pastebin content retriever
+* Kinesis stream for scraped content
+* S3 bucket to capture scraped content
+* Scraper/content retriever for GitHub gists
+
+See [issues](https://github.com/ChMaFu/PasteHunter-serverless/issues).
+
 ## Getting Started
 
 The basic setup for running the platform within AWS is as follows.
