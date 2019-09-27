@@ -105,3 +105,13 @@ venv.bak/
 
 # AWS CDK output
 cdk.out/
+
+# VS Code specific settings
+.vscode/
+
+# don't capture any settings.json files
+**/settings.json
+
+# ignore changes to Yararules, which are generated on each build
+**/YaraRules/
+**/PasteHunter/
